@@ -4,10 +4,30 @@ pyannote.audio 파이프라인을 로드하고 오디오를 분석하여
 각 화자별 발화 구간(세그먼트)과 겹침(overlap) 구간을 계산합니다.
 """
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 import torch
+
+# Windows 심볼릭 링크 경고 억제
+os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
+
+# huggingface_hub >= 0.24.0 use_auth_token -> token 호환성 패치
+try:
+    import huggingface_hub
+    _orig_hf_hub_download = huggingface_hub.hf_hub_download
+
+    def _compat_hf_hub_download(*args, **kwargs):
+        if "use_auth_token" in kwargs:
+            token = kwargs.pop("use_auth_token")
+            if "token" not in kwargs:
+                kwargs["token"] = token
+        return _orig_hf_hub_download(*args, **kwargs)
+
+    huggingface_hub.hf_hub_download = _compat_hf_hub_download
+except Exception:
+    pass
 
 from speaker_split.utils import (
     format_gated_repo_error,
