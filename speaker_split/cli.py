@@ -73,8 +73,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--num-speakers",
         type=int,
-        default=2,
-        help="고정 화자 수 (기본값: 2)",
+        default=None,
+        help="고정 화자 수 (미지정 시 pyannote 최적 자동 감지)",
     )
     parser.add_argument(
         "--min-speakers",
@@ -145,7 +145,7 @@ def build_parser() -> argparse.ArgumentParser:
 def run(
     input_path_str: str,
     output_dir_str: str = "output",
-    num_speakers: Optional[int] = 2,
+    num_speakers: Optional[int] = None,
     min_speakers: Optional[int] = None,
     max_speakers: Optional[int] = None,
     mode: str = "pad",
