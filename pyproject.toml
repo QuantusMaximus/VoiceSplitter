@@ -9,8 +9,8 @@ description = "화자 분리 및 오디오 분할 CLI 도구 (Speaker Diarizatio
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "torch>=2.1.0",
-    "torchaudio>=2.1.0",
+    "torch>=2.1.0,<2.5.0",
+    "torchaudio>=2.1.0,<2.5.0",
     "pyannote.audio>=3.1.1",
     "soundfile>=0.12.1",
     "numpy>=1.24.0,<2.0.0",
